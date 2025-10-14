@@ -4,15 +4,32 @@
  * connects the app shell to the React application(s) that make up this
  * microfrontend.
  */
-import { getAsyncLifecycle, defineConfigSchema } from '@openmrs/esm-framework';
+import { getAsyncLifecycle,getSyncLifecycle, defineConfigSchema } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
-
+import RootComponent from './root.component'; 
+import { createLeftPanelLink } from './left-panel-links.component';
 const moduleName = '@openmrs/esm-coststructure-app';
 
 const options = {
-  featureName: 'root-world',
+  featureName: '',
   moduleName,
 };
+/*Link for my left panel */
+export const homeLeftPanelLink = getSyncLifecycle(
+  createLeftPanelLink({name:"",title:"Estructura de costos"}),
+  options
+);
+
+export const addLeftPanelLink = getSyncLifecycle(
+  createLeftPanelLink({name:"add",title:"Crear"}),
+  options
+)
+
+export const reportLeftPanelLink = getSyncLifecycle(
+  createLeftPanelLink({name:"report",title:"Resumen"}),
+  options
+)
+
 
 /**
  * This tells the app shell how to obtain translation files: that they
@@ -37,7 +54,7 @@ export function startupApp() {
  * will be `openmrsSpaBase() + 'root'`, which is usually
  * `/openmrs/spa/root`.
  */
-export const root = getAsyncLifecycle(() => import('./root.component'), options);
+export const root = getSyncLifecycle(RootComponent, options);
 
 /**
  * The following are named exports for the extensions defined in this frontend modules. See the `routes.json` file to see how these are used.

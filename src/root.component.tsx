@@ -8,32 +8,40 @@
  *   https://openmrs.github.io/openmrs-esm-core/#/main/config
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Boxes } from './boxes/slot/boxes.component';
-import Greeter from './greeter/greeter.component';
-import PatientGetter from './patient-getter/patient-getter.component';
-import Resources from './resources/resources.component';
 import styles from './root.scss';
-
-const Root: React.FC = () => {
+import CostStructureSearch from './pages/cost-structure-search';
+import { 
+  BrowserRouter as Router,
+  Route,
+  Routes
+} from 'react-router-dom';
+import { baseName } from './constants';
+import { LeftNavMenu, setLeftNav, unsetLeftNav } from '@openmrs/esm-framework';
+const RootComponent: React.FC = () => {
   const { t } = useTranslation();
+  const spaBasePath = window.spaBase;
+  
+  useEffect(()=>{
+    const navName = "cost-structure-left-panel-slot"
+    setLeftNav({
+      name:navName,
+      basePath:spaBasePath
+    })
+    return ()=> unsetLeftNav(navName)
+  },[spaBasePath]);
 
   return (
-    <div className={styles.container}>
-      <h3 className={styles.welcome}>{t('welcomeText', 'Welcome to the O3 coststructure app')}</h3>
-      <p className={styles.explainer}>
-        {t('explainer', 'The following examples demonstrate some key features of the O3 framework')}.
-      </p>
-      {/* Greeter: demonstrates the configuration system */}
-      <Greeter />
-      {/* Boxes: demonstrates the extension system */}
-      <Boxes />
-      {/* PatientGetter: demonstrates data fetching */}
-      <PatientGetter />
-      <Resources />
-    </div>
+    <Router basename={baseName}>
+      <LeftNavMenu />
+      <Routes>
+        <Route path='/' element={<CostStructureSearch/>}/>
+        <Route path='/add' element={<div>Añadir</div>}/>
+        <Route path='/reports' element={<div>Reportes</div>}/>
+      </Routes>
+    </Router>
   );
 };
 
-export default Root;
+export default RootComponent;

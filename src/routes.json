@@ -6,25 +6,25 @@
   },
   "extensions": [
     {
-      "name": "Red box",
-      "component": "redBox",
-      "slot": "Boxes"
+      "component": "homeLeftPanelLink",
+      "name": "cost-structure-left-panel-link",
+      "slot": "cost-structure-left-panel-slot"
     },
     {
-      "name": "Blue box",
-      "component": "blueBox",
-      "slot": "Boxes"
+      "component": "addLeftPanelLink",
+      "name": "add-cost-structure-left-panel-link",
+      "slot": "cost-structure-left-panel-slot"
     },
-        {
-      "name": "Brand box",
-      "component": "blueBox",
-      "slot": "Boxes"
+    {
+      "component": "reportLeftPanelLink",
+      "name": "report-cost-structure-left-panel-link",
+      "slot": "cost-structure-left-panel-slot"
     }
   ],
   "pages": [
     {
       "component": "root",
-      "route": "root"
+      "route": "cost-structure"
     }
   ]
 }

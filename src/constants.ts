@@ -1,0 +1,1 @@
+export const baseName = `${window.getOpenmrsSpaBase()}cost-structure`;
