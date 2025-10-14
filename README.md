@@ -1,8 +1,8 @@
-# OpenMRS ESM Template App
+# OpenMRS ESM coststructure App
 
-![Node.js CI](https://github.com/openmrs/openmrs-esm-template-app/workflows/Node.js%20CI/badge.svg)
+![Node.js CI](https://github.com/openmrs/openmrs-esm-coststructure-app/workflows/Node.js%20CI/badge.svg)
 
-This repository serves as a template for building OpenMRS frontend modules. For detailed guidance, see the [Creating a Frontend Module](https://openmrs.atlassian.net/wiki/x/rIIBCQ) documentation.
+This repository serves as a coststructure for building OpenMRS frontend modules. For detailed guidance, see the [Creating a Frontend Module](https://openmrs.atlassian.net/wiki/x/rIIBCQ) documentation.
 
 For more information, please see the [OpenMRS Frontend Developer Documentation](https://openmrs.atlassian.net/wiki/x/IABBHg).
 
@@ -19,7 +19,7 @@ Once it is running, a browser window should open running the O3 reference applic
 
 ## Adapting the code
 
-1. Replace all instances of "template" with your frontend module's name
+1. Replace all instances of "coststructure" with your frontend module's name
 2. Update `index.ts` with your feature name, page name, and route
 3. Rename the `root.*` files to match your first page
 4. Clear `config-schema` objects and rebuild as needed
@@ -30,7 +30,7 @@ Once it is running, a browser window should open running the O3 reference applic
 
 At this point, you should be able to write your first page as a React application.
 
-See the [Medication dispensing app](https://github.com/openmrs/openmrs-esm-dispensing-app) for a complete example of a non-trivial frontend module built using this template.
+See the [Medication dispensing app](https://github.com/openmrs/openmrs-esm-dispensing-app) for a complete example of a non-trivial frontend module built using this coststructure.
 
 ## Integration
 

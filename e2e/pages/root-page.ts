@@ -10,7 +10,7 @@ export class RootPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.welcomeHeading = page.getByRole('heading', { name: /welcome to the o3 template app/i });
+    this.welcomeHeading = page.getByRole('heading', { name: /welcome to the o3 coststructure app/i });
     this.configSection = page.getByRole('heading', { name: /configuration system/i });
     this.extensionSection = page.getByRole('heading', { name: /extension system/i });
     this.dataFetchingSection = page.getByRole('heading', { name: /data fetching/i });

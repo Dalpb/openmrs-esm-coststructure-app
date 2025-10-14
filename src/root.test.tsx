@@ -36,13 +36,13 @@ import Root from './root.component';
  */
 const mockUseConfig = jest.mocked(useConfig<Config>);
 
-it('renders a landing page for the Template app', () => {
+it('renders a landing page for the coststructure app', () => {
   const config: Config = { casualGreeting: false, whoToGreet: ['World'] };
   mockUseConfig.mockReturnValue(config);
 
   render(<Root />);
 
-  expect(screen.getByRole('heading', { name: /welcome to the o3 template app/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /welcome to the o3 coststructure app/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /configuration system/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /extension system/i })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /data fetching/i })).toBeInTheDocument();

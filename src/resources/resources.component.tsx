@@ -14,8 +14,8 @@ function Resources() {
       <div className={styles.cardsContainer}>
         <Card
           title={t('getStarted', 'Get started')}
-          subtitle={t('getStartedExplainer', 'Create a frontend module from this template') + '.'}
-          link="https://github.com/openmrs/openmrs-esm-template-app/generate"
+          subtitle={t('getStartedExplainer', 'Create a frontend module from this coststructure') + '.'}
+          link="https://github.com/openmrs/openmrs-esm-coststructure-app/generate"
         />
         <Card
           title={t('frontendDocs', 'Frontend docs')}
