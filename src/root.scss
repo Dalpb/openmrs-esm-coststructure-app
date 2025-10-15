@@ -4,6 +4,10 @@
 .container {
   padding: layout.$spacing-07;
 }
+.main{
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+}
 
 .welcome {
   @include type.type-style('heading-04');

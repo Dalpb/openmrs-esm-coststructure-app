@@ -11,37 +11,15 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './root.scss';
-import CostStructureSearch from './pages/cost-structure-search';
-import { 
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from 'react-router-dom';
+import CostStructureSearch from './pages/cost-structure-home';
 import { baseName } from './constants';
-import { LeftNavMenu, setLeftNav, unsetLeftNav } from '@openmrs/esm-framework';
+import { SideNav, SideNavItems, SideNavLink } from '@carbon/react';
+import { Router } from './routes/router';
 const RootComponent: React.FC = () => {
   const { t } = useTranslation();
-  const spaBasePath = window.spaBase;
-  
-  useEffect(()=>{
-    const navName = "cost-structure-left-panel-slot"
-    setLeftNav({
-      name:navName,
-      basePath:spaBasePath
-    })
-    return ()=> unsetLeftNav(navName)
-  },[spaBasePath]);
+  const navName = 'cost-structure-left-panel-slot';
 
-  return (
-    <Router basename={baseName}>
-      <LeftNavMenu />
-      <Routes>
-        <Route path='/' element={<CostStructureSearch/>}/>
-        <Route path='/add' element={<div>Añadir</div>}/>
-        <Route path='/reports' element={<div>Reportes</div>}/>
-      </Routes>
-    </Router>
-  );
+  return <Router />;
 };
 
 export default RootComponent;
