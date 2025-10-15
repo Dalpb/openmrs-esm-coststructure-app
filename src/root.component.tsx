@@ -8,17 +8,12 @@
  *   https://openmrs.github.io/openmrs-esm-core/#/main/config
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './root.scss';
-import CostStructureSearch from './pages/cost-structure-home';
-import { baseName } from './constants';
-import { SideNav, SideNavItems, SideNavLink } from '@carbon/react';
 import { Router } from './routes/router';
 const RootComponent: React.FC = () => {
   const { t } = useTranslation();
   const navName = 'cost-structure-left-panel-slot';
-
   return <Router />;
 };
 

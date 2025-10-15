@@ -1,0 +1,9 @@
+@use '@carbon/layout';
+@use '@carbon/colors';
+
+.card {
+ background-color: colors.$white;
+ display:flex;
+ flex-flow: column nowrap;
+ gap:1rem;
+}
