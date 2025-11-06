@@ -3,7 +3,12 @@ import React from 'react';
 import styles from './styles.scss';
 import HomeTable from '../../components/tables/home/table.component';
 import { Add, Filter } from '@carbon/icons-react';
+import useGetCostStructure from '../../hooks/use-get-coststructure';
 const CostStructureSearch: React.FC = () => {
+  const { costStructures, isLoading, isError } = useGetCostStructure();
+
+  if (isLoading) return <p>Cargando estructuras de costos...</p>;
+  if (isError) return <p>Error al cargar estructuras de costos.</p>;
   return (
     <div>
       <h1>Estructura de Costos de CPMS</h1>

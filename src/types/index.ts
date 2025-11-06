@@ -1,9 +1,9 @@
 export interface CostStructure  {
     id: number,
     uuid: string,
-    createdDate: Date,
-    startDate: Date,
-    endDate: Date
+    createdDate: number,
+    startDate: number,
+    endDate: number
 }
 
 export interface AnnualServiceCost { 
@@ -25,6 +25,10 @@ export interface BasicServiceInductors {
     waterInductor?: number,
     energyInductor?: number,
     phoneNetInductor?:number
+}
+export interface Procedure {
+    conceptId: number,
+    name: string
 }
 
 export interface Equipment {
