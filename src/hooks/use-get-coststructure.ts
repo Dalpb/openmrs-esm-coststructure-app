@@ -1,24 +1,31 @@
 import useSWR from "swr";
 import { AnnualServiceCost, CostStructure, EquipmentCost, HumanResourceCost, InfrastructureCost, Procedure } from "../types";
 import { openmrsFetch } from "@openmrs/esm-framework";
+import { baseUrl } from "../constants";
 
-const API_URL =
-  "/ws/module/coststructure/list";
+const API_URL = `${baseUrl}/list`
+
+interface Response {
+  content: CostStructureResponse[],
+  total: number,
+  page:number,
+  size:number
+}
+
 interface CostStructureResponse extends CostStructure {
     procedure: Procedure | null
-    anualServiceCost: AnnualServiceCost | null
-    humanResourceCosts: Array<HumanResourceCost> 
-    equipmentCosts: Array<EquipmentCost>
-    infrastructureCosts:Array<InfrastructureCost>
 }
-const useGetCostStructure = () => {
-  const { data, error, isLoading } = useSWR<any>(
-    API_URL,
+const useGetCostStructure = (page = 0, size = 10, query = "") => {
+  const params = new URLSearchParams({ page: String(page), size: String(size), query });
+  const URL = `${API_URL}?${params.toString()}`;
+  const { data, error, isLoading } = useSWR<{data: Response}>(
+    URL,
     openmrsFetch
-  );
+  );  
 
   return {
-    costStructures: data ?? [],
+    costStructure: data?.data.content,
+    total:data?.data.total,
     isLoading,
     isError: error,
   };  

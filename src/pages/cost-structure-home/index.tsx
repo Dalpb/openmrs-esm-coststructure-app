@@ -1,14 +1,18 @@
 import { Button, Select, Search, Pagination } from '@carbon/react';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.scss';
 import HomeTable from '../../components/tables/home/table.component';
 import { Add, Filter } from '@carbon/icons-react';
 import useGetCostStructure from '../../hooks/use-get-coststructure';
 const CostStructureSearch: React.FC = () => {
-  const { costStructures, isLoading, isError } = useGetCostStructure();
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [query, setQuery] = useState('');
+  const { costStructure, total, isLoading, isError } = useGetCostStructure(page - 1, size, query);
 
   if (isLoading) return <p>Cargando estructuras de costos...</p>;
   if (isError) return <p>Error al cargar estructuras de costos.</p>;
+
   return (
     <div>
       <h1>Estructura de Costos de CPMS</h1>
@@ -22,8 +26,17 @@ const CostStructureSearch: React.FC = () => {
             <Search labelText="" placeholder="Ejm: 00906 o Anestesia para vulvectomía" />
             <Button hasIconOnly kind="ghost" renderIcon={Filter} iconDescription="Filter button" />
           </div>
-          <HomeTable />
-          <Pagination pageSizes={[10, 15, 20, 25]} />
+          <HomeTable data={costStructure} />
+          <Pagination
+            page={page}
+            pageSize={size}
+            totalItems={total}
+            pageSizes={[5, 10, 20, 50]}
+            onChange={({ page, pageSize }) => {
+              setPage(page);
+              setSize(pageSize);
+            }}
+          />
         </div>
       </article>
     </div>
