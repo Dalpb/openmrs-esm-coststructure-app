@@ -18,11 +18,10 @@
     padding: 8px;
     cursor: pointer;
     border-bottom: '1px solid #f5f5f5';
-
-
-}
-.procedure:hover{
-    background-color: #f0f0f0;
+    
+    &:hover{
+        background-color: #f0f0f0;
+    }
 }
 
 .procedure > p:nth-child(2){

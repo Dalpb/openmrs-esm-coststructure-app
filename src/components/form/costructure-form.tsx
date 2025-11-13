@@ -1,25 +1,26 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { costStructureSchema, CostStructureFormValues } from './schema/costructure-schema';
-import { Button, Tabs, Tab, TextInput, TabList } from '@carbon/react';
+import { Button, Tabs, Tab, TextInput, TabList, TabPanels, TabPanel } from '@carbon/react';
 import { ProcedureAutocomplete } from './autocomplete/procedure-autocomplete';
 import React from 'react';
 import { Procedure } from '../../hooks/use-get-procedures';
+import InfrastructureTab from './tabs/infrastructure-tab';
 
 export default function CostStructureForm() {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<CostStructureFormValues>({
+  const form = useForm<CostStructureFormValues>({
     resolver: zodResolver(costStructureSchema),
     defaultValues: {
       procedure: { conceptId: 0, nameFull: '', code: '' },
+      infrastructures: [],
     },
   });
-
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = form;
   const onSubmit = (data: CostStructureFormValues) => {
     console.log('💾 Datos enviados:', data);
   };
@@ -49,13 +50,21 @@ export default function CostStructureForm() {
         <h3 className="text-lg font-medium">Estructura de Costos Detallada</h3>
         <Tabs>
           <TabList>
+            <Tab>Infraestructura</Tab>
             <Tab>Recursos Humanos</Tab>
             <Tab>Materiales</Tab>
             <Tab>Equipos</Tab>
             <Tab>Instrumental</Tab>
             <Tab>Medicinas</Tab>
+            <Tab>Servicios Públicos</Tab>
+            <Tab>Servicios Generales</Tab>
           </TabList>
         </Tabs>
+        <TabPanels>
+          <TabPanel>
+            <InfrastructureTab form={form} />
+          </TabPanel>
+        </TabPanels>
       </section>
 
       <div className="flex gap-2">
