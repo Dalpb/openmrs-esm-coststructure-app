@@ -6,7 +6,6 @@ import useGetInfrastructure from '../../../hooks/use-get-infrastructure';
 import { Button, IconButton, NumberInput, Select, SelectItem, Table } from '@carbon/react';
 import { Add, TrashCan } from '@carbon/react/icons';
 import { calculateDepreciationByMinutes, calculateTotalValidConsruction } from '../../../utils/infrastructure';
-import { set } from 'zod';
 
 interface CalculateFields {
   totalConstruction: number;
@@ -26,25 +25,44 @@ export default function InfrastructureTab({ form }: Props) {
     control,
     name: 'infrastructures',
   });
+
+  const { fields: publicServiceFields, append: publicServiceAppend } = useFieldArray({
+    control,
+    name: 'publicServices',
+  });
+
+  const handleCreateRow = () => {
+    append({
+      infrastructureId: 0,
+      areaM2: 0,
+      constructionCost: 0,
+      timePerformanceMinutes: 0,
+      infrastructureName: '',
+    });
+    publicServiceAppend({
+      ups: '',
+      energyConsumption: 0,
+      waterConsumption: 0,
+      phoneNetConsumption: 0,
+      energyInductor: 0,
+      waterInductor: 0,
+      phoneNetInductor: 0,
+      totalCostEnergy: 0,
+      totalCostWater: 0,
+      totalCostPhoneNet: 0,
+      totalCost: 0,
+      productionProyected: 0,
+    });
+  };
+
   return (
     <section className="cds--grid cds--spacing-05">
-      <div className="cds--row cds--content">
+      <div>
         <div className="cds--col">
           <h4 className="cds--heading-04">Infraestructura</h4>
         </div>
         <div className="cds--col" style={{ textAlign: 'right' }}>
-          <Button
-            kind="primary"
-            size="md"
-            onClick={() =>
-              append({
-                infrastructureId: 0,
-                areaM2: 0,
-                constructionCost: 0,
-                timePerformanceMinutes: 0,
-              })
-            }
-          >
+          <Button kind="primary" size="md" onClick={handleCreateRow}>
             <Add size={16} />
             Agregar Infraestructura
           </Button>
@@ -86,6 +104,7 @@ export default function InfrastructureTab({ form }: Props) {
                             if (infra) {
                               setValue(`infrastructures.${index}.areaM2`, infra.areaM2);
                               setValue(`infrastructures.${index}.constructionCost`, infra.constructionCost);
+                              setValue(`infrastructures.${index}.infrastructureName`, infra.locationName);
                             }
                             const totalConstruction = calculateTotalValidConsruction(
                               infra?.areaM2 || 0,
