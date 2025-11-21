@@ -36,7 +36,14 @@ export const costStructureSchema = z.object({
       annualPhoneNetCost: z.number().nonnegative(),
       annualAdministrativeCost: z.number().nonnegative(),
       annualGeneralCost: z.number().nonnegative()
-  })
+  }),
+  humanResourceCost: z.array(z.object({
+    humanResourceId: z.number(),
+    quantity: z.number().nonnegative(),
+    timeMinutes: z.number().nonnegative(),
+    priceMonth: z.number().nonnegative(),
+    costMinutes:z.number().nonnegative()
+  }))
 })
 
 
