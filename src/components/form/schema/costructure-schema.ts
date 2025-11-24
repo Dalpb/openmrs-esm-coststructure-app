@@ -43,7 +43,16 @@ export const costStructureSchema = z.object({
     timeMinutes: z.number().nonnegative(),
     priceMonth: z.number().nonnegative(),
     costMinutes:z.number().nonnegative()
-  }))
+  })),
+  equipmentCost: z.array(
+    z.object({
+      equipmentId: z.number(),
+      quantity: z.number().nonnegative(),
+      price: z.number().nonnegative(),
+      usefullYears:z.number().nonnegative(),
+      timeMinutes: z.number().nonnegative()
+    })
+  )
 })
 
 

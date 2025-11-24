@@ -10,6 +10,7 @@ import PublicServicesTab from './tabs/public-service-tab';
 import { useState } from 'react';
 import GeneralServiceTab from './tabs/general-service-tab';
 import HumanResourceTab from './tabs/humanresource-tab';
+import EquipmentTab from './tabs/equipment-tab';
 export default function CostStructureForm() {
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -64,13 +65,11 @@ export default function CostStructureForm() {
               <Tab>Servicios Generales</Tab>
               <Tab>Recursos Humanos</Tab>
               <Tab>Materiales</Tab>
-              <Tab>Equipos</Tab>
-              <Tab>Instrumental</Tab>
-              <Tab>Medicinas</Tab>
+              <Tab>Equipamiento</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <InfrastructureTab form={form} />
+                <EquipmentTab form={form} />
               </TabPanel>
               <TabPanel>
                 <PublicServicesTab form={form} />
@@ -81,7 +80,9 @@ export default function CostStructureForm() {
               <TabPanel>
                 <HumanResourceTab form={form} />
               </TabPanel>
-              <TabPanel>taab</TabPanel>
+              <TabPanel>
+                <InfrastructureTab form={form} />
+              </TabPanel>
               <TabPanel>taab</TabPanel>
               <TabPanel>taab</TabPanel>
               <TabPanel>taab</TabPanel>
