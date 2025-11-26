@@ -12,6 +12,9 @@ import GeneralServiceTab from './tabs/general-service-tab';
 import HumanResourceTab from './tabs/humanresource-tab';
 import EquipmentTab from './tabs/equipment-tab';
 import SupplyTab from './tabs/supply-tab';
+import PageHeader from '../ui/PageHeader/pageHeader';
+import { WhitePaper } from '@carbon/react/icons';
+import SummaryTab from './tabs/summary-tab';
 export default function CostStructureForm() {
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -38,9 +41,9 @@ export default function CostStructureForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
-      <h1 className="text-xl font-semibold">Estructura de Costos - CPMS</h1>
-      <div style={{ backgroundColor: 'white' }} className="p-4 space-y-4 rounded-md shadow-md">
-        <section className="space-y-2">
+      <PageHeader icon={<WhitePaper size={48} />} title="Crear Estructura de Costos – CPMS" subtitle="Costeo" />
+      <div className="">
+        <section className="cds--space-y-2 cds--space-x-2">
           <h3 className="text-lg font-medium">Información del procedimiento</h3>
 
           <Controller
@@ -58,7 +61,7 @@ export default function CostStructureForm() {
 
         {/* Tabs de costos */}
         <section>
-          <h3 className="text-lg font-medium">Estructura de Costos Detallada</h3>
+          <h3 className="">Estructura de Costos Detallada</h3>
           <Tabs selectedIndex={selectedTab} onChange={handleTanbChange}>
             <TabList>
               <Tab>Insumos y Medicamentos</Tab>
@@ -88,7 +91,9 @@ export default function CostStructureForm() {
               <TabPanel>
                 <GeneralServiceTab form={form} />
               </TabPanel>
-              <TabPanel>Resumen</TabPanel>
+              <TabPanel>
+                <SummaryTab form={form} />
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </section>

@@ -4,7 +4,7 @@ import { CostStructureFormValues } from '../schema/costructure-schema';
 import React from 'react';
 import { calculateAsignedCost, calculateInductor } from '../../../utils/publicservices';
 import styles from './tabs.styles.scss';
-import NoContent from '../../ui/NoContent';
+import NoContent from '../../ui/NoContent/NoContent';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;
 }

@@ -6,7 +6,7 @@ import { Add } from '@carbon/react/icons';
 import useGetSupply from '../../../hooks/use-get-supply';
 import { calculateStandarCostSupply, calculateUnitCostSupply } from '../../../utils/supply';
 import styles from './tabs.styles.scss';
-import NoContent from '../../ui/NoContent';
+import NoContent from '../../ui/NoContent/NoContent';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;
 }

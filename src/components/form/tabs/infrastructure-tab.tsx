@@ -7,7 +7,7 @@ import { Button, IconButton, NumberInput, Select, SelectItem, Table } from '@car
 import { Add, TrashCan } from '@carbon/react/icons';
 import { calculateDepreciationByMinutes, calculateTotalValidConsruction } from '../../../utils/infrastructure';
 import styles from './tabs.styles.scss';
-import NoContent from '../../ui/NoContent';
+import NoContent from '../../ui/NoContent/NoContent';
 interface CalculateFields {
   totalConstruction: number;
   depreciationPerMinute: number;

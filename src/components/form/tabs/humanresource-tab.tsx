@@ -5,7 +5,7 @@ import { Button, NumberInput, Select, SelectItem } from '@carbon/react';
 import { Add } from '@carbon/react/icons';
 import useGetHumanResource from '../../../hooks/use-get-humanresource';
 import styles from './tabs.styles.scss';
-import NoContent from '../../ui/NoContent';
+import NoContent from '../../ui/NoContent/NoContent';
 import { calculateCostPerMinuteHumanResource, calculateUnitCostHumanResource } from '../../../utils/humanresource';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;

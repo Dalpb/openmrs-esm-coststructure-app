@@ -7,7 +7,7 @@ import useGetEquipment from '../../../hooks/use-get-equipment';
 import { calculateCostEquipment, calculateDepreciationMinutes } from '../../../utils/equipments';
 import PaperIlustration from '../../ilustration/paper-ilustration';
 import styles from './tabs.styles.scss';
-import NoContent from '../../ui/NoContent';
+import NoContent from '../../ui/NoContent/NoContent';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;
 }

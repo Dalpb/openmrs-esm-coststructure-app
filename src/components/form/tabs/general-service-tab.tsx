@@ -3,7 +3,7 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 import { CostStructureFormValues } from '../schema/costructure-schema';
 import { NumberInput } from '@carbon/react';
 import { calculateAsignedCostGeneral } from '../../../utils/publicservices';
-import NoContent from '../../ui/NoContent';
+import NoContent from '../../ui/NoContent/NoContent';
 import styles from './tabs.styles.scss';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;

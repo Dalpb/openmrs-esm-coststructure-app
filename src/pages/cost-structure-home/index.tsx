@@ -4,6 +4,8 @@ import styles from './styles.scss';
 import HomeTable from '../../components/tables/home/table.component';
 import { Add, Filter } from '@carbon/icons-react';
 import useGetCostStructure from '../../hooks/use-get-coststructure';
+import PageHeader from '../../components/ui/PageHeader/pageHeader';
+import { WhitePaper } from '@carbon/icons-react';
 const CostStructureSearch: React.FC = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -15,7 +17,7 @@ const CostStructureSearch: React.FC = () => {
 
   return (
     <div>
-      <h1>Estructura de Costos de CPMS</h1>
+      <PageHeader icon={<WhitePaper size={48} />} title="Estructura de Costos – CPMS" subtitle="Costeo" />
       <article className={styles.card}>
         <div className={styles.container}>
           <h3>Costeo de Procedimientos médicos Guardados</h3>
