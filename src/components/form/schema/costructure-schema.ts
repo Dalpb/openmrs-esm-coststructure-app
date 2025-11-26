@@ -52,6 +52,20 @@ export const costStructureSchema = z.object({
       usefullYears:z.number().nonnegative(),
       timeMinutes: z.number().nonnegative()
     })
+  ),
+  supplyCost: z.array(
+    z.object({
+      supplyId: z.number(),
+      adquisitionPrice: z.number().nonnegative(),
+      quantityUsed: z.number().nonnegative(),
+      timeMinutes: z.number().optional(),
+      unitAcquisition:z.string(),
+      unitConsumption: z.string(),
+      equivalence: z.number(),
+      name:z.string(),
+      type:z.string(),
+      unitCost: z.number(),
+    })
   )
 })
 

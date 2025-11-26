@@ -11,6 +11,7 @@ import { useState } from 'react';
 import GeneralServiceTab from './tabs/general-service-tab';
 import HumanResourceTab from './tabs/humanresource-tab';
 import EquipmentTab from './tabs/equipment-tab';
+import SupplyTab from './tabs/supply-tab';
 export default function CostStructureForm() {
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -36,7 +37,7 @@ export default function CostStructureForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="">
       <h1 className="text-xl font-semibold">Estructura de Costos - CPMS</h1>
       <div style={{ backgroundColor: 'white' }} className="p-4 space-y-4 rounded-md shadow-md">
         <section className="space-y-2">
@@ -60,22 +61,20 @@ export default function CostStructureForm() {
           <h3 className="text-lg font-medium">Estructura de Costos Detallada</h3>
           <Tabs selectedIndex={selectedTab} onChange={handleTanbChange}>
             <TabList>
+              <Tab>Insumos y Medicamentos</Tab>
+              <Tab>Equipamiento</Tab>
+              <Tab>Recursos Humanos</Tab>
               <Tab>Infraestructura</Tab>
               <Tab>Servicios Públicos</Tab>
               <Tab>Servicios Generales</Tab>
-              <Tab>Recursos Humanos</Tab>
-              <Tab>Materiales</Tab>
-              <Tab>Equipamiento</Tab>
+              <Tab>Resumen</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
+                <SupplyTab form={form} />
+              </TabPanel>
+              <TabPanel>
                 <EquipmentTab form={form} />
-              </TabPanel>
-              <TabPanel>
-                <PublicServicesTab form={form} />
-              </TabPanel>
-              <TabPanel>
-                <GeneralServiceTab form={form} />
               </TabPanel>
               <TabPanel>
                 <HumanResourceTab form={form} />
@@ -83,9 +82,13 @@ export default function CostStructureForm() {
               <TabPanel>
                 <InfrastructureTab form={form} />
               </TabPanel>
-              <TabPanel>taab</TabPanel>
-              <TabPanel>taab</TabPanel>
-              <TabPanel>taab</TabPanel>
+              <TabPanel>
+                <PublicServicesTab form={form} />
+              </TabPanel>
+              <TabPanel>
+                <GeneralServiceTab form={form} />
+              </TabPanel>
+              <TabPanel>Resumen</TabPanel>
             </TabPanels>
           </Tabs>
         </section>

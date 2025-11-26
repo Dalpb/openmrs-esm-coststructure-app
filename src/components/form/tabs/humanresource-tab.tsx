@@ -4,6 +4,8 @@ import React from 'react';
 import { Button, NumberInput, Select, SelectItem } from '@carbon/react';
 import { Add } from '@carbon/react/icons';
 import useGetHumanResource from '../../../hooks/use-get-humanresource';
+import styles from './tabs.styles.scss';
+import NoContent from '../../ui/NoContent';
 import { calculateCostPerMinuteHumanResource, calculateUnitCostHumanResource } from '../../../utils/humanresource';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;
@@ -29,7 +31,7 @@ export default function HumanResourceTab({ form }: Props) {
   const humanresourceData = watch('humanResourceCost');
 
   return (
-    <section className="cds--grid cds--spacing-05">
+    <section className={styles['tab-container']}>
       <div>
         <div className="cds--col">
           <h4 className="cds--heading-04">Recursos Humanos</h4>
@@ -57,62 +59,70 @@ export default function HumanResourceTab({ form }: Props) {
               </tr>
             </thead>
             <tbody>
-              {fields.map((row, index) => {
-                const costPerMinute = calculateCostPerMinuteHumanResource(humanresourceData[index].priceMonth);
-                const unitCost = calculateUnitCostHumanResource(
-                  costPerMinute,
-                  humanresourceData[index].timeMinutes,
-                  humanresourceData[index].quantity,
-                );
-                return (
-                  <tr key={row.id}>
-                    <td>
-                      <Controller
-                        name={`humanResourceCost.${index}.humanResourceId`}
-                        control={control}
-                        render={({ field }) => (
-                          <Select id="" key={row.id} {...field} labelText="">
-                            <SelectItem text="Seleccione Recurso Humano" value="" />
-                            {humanresource.map((rrh) => (
-                              <SelectItem key={rrh.id} text={rrh.speciality} value={rrh.id.toString()} />
-                            ))}
-                          </Select>
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Controller
-                        name={`humanResourceCost.${index}.quantity`}
-                        control={control}
-                        render={({ field }) => (
-                          <NumberInput hideSteppers id={`quantity-${index}`} value={field.value} {...field} />
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Controller
-                        name={`humanResourceCost.${index}.timeMinutes`}
-                        control={control}
-                        render={({ field }) => (
-                          <NumberInput hideSteppers id={`timeMinutes-${index}`} value={field.value} {...field} />
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Controller
-                        name={`humanResourceCost.${index}.priceMonth`}
-                        control={control}
-                        render={({ field }) => (
-                          <NumberInput hideSteppers id={`priceMonth-${index}`} value={field.value} {...field} />
-                        )}
-                      />
-                    </td>
-                    <td>{costPerMinute}</td>
-                    <td>{unitCost}</td>
-                    <td></td>
-                  </tr>
-                );
-              })}
+              {fields.length > 0 ? (
+                fields.map((row, index) => {
+                  const costPerMinute = calculateCostPerMinuteHumanResource(humanresourceData[index].priceMonth);
+                  const unitCost = calculateUnitCostHumanResource(
+                    costPerMinute,
+                    humanresourceData[index].timeMinutes,
+                    humanresourceData[index].quantity,
+                  );
+                  return (
+                    <tr key={row.id}>
+                      <td>
+                        <Controller
+                          name={`humanResourceCost.${index}.humanResourceId`}
+                          control={control}
+                          render={({ field }) => (
+                            <Select id="" key={row.id} {...field} labelText="">
+                              <SelectItem text="Seleccione Recurso Humano" value="" />
+                              {humanresource.map((rrh) => (
+                                <SelectItem key={rrh.id} text={rrh.speciality} value={rrh.id.toString()} />
+                              ))}
+                            </Select>
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <Controller
+                          name={`humanResourceCost.${index}.quantity`}
+                          control={control}
+                          render={({ field }) => (
+                            <NumberInput hideSteppers id={`quantity-${index}`} value={field.value} {...field} />
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <Controller
+                          name={`humanResourceCost.${index}.timeMinutes`}
+                          control={control}
+                          render={({ field }) => (
+                            <NumberInput hideSteppers id={`timeMinutes-${index}`} value={field.value} {...field} />
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <Controller
+                          name={`humanResourceCost.${index}.priceMonth`}
+                          control={control}
+                          render={({ field }) => (
+                            <NumberInput hideSteppers id={`priceMonth-${index}`} value={field.value} {...field} />
+                          )}
+                        />
+                      </td>
+                      <td>{costPerMinute}</td>
+                      <td>{unitCost}</td>
+                      <td></td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={7} className={styles['empty-state-container']}>
+                    <NoContent title="No hay Recursos Humanos añadidos" message="Añada algunos Recursos Humanos" />
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

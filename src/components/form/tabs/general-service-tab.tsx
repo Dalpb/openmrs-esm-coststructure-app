@@ -3,6 +3,8 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 import { CostStructureFormValues } from '../schema/costructure-schema';
 import { NumberInput } from '@carbon/react';
 import { calculateAsignedCostGeneral } from '../../../utils/publicservices';
+import NoContent from '../../ui/NoContent';
+import styles from './tabs.styles.scss';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;
 }
@@ -14,7 +16,7 @@ export default function GeneralServiceTab({ form }: Props) {
   const publicServices = watch('publicServices');
   const totalAreaM2 = infrastructures.reduce((acc, curr) => acc + curr.areaM2, 0);
   return (
-    <section className="cds--grid cds--spacing-05">
+    <section className={styles['tab-container']}>
       <div>
         <div className="cds--col">
           <h4 className="cds--heading-04">Servicios Generales</h4>
@@ -63,38 +65,49 @@ export default function GeneralServiceTab({ form }: Props) {
               <th>Costo Servicios Generales Estandar Unitario Indirecto</th>
             </thead>
             <tbody>
-              {infrastructures.map((infrastructure, index) => {
-                const generalCost = annualServices.annualGeneralCost || 0;
-                const administrativeCost = annualServices.annualAdministrativeCost || 0;
-                const AdminCostUnit = generalCost / publicServices[index]?.productionProyected || 0;
-                const GenCostUnit = administrativeCost / publicServices[index]?.productionProyected || 0;
-                return (
-                  <tr key={index}>
-                    <td>{infrastructure.infrastructureName}</td>
-                    <td>{calculateAsignedCostGeneral(generalCost, totalAreaM2, infrastructure.areaM2)}</td>
-                    <td>{calculateAsignedCostGeneral(administrativeCost, totalAreaM2, infrastructure.areaM2)}</td>
-                    <td>
-                      <Controller
-                        name={`publicServices.${index}.productionProyected`}
-                        control={control}
-                        render={({ field }) => (
-                          <NumberInput
-                            hideSteppers
-                            id={`phone-${index}`}
-                            value={field.value}
-                            onChange={(_, { value }) => {
-                              field.onChange(Number(value));
-                            }}
-                            min={0}
-                          />
-                        )}
-                      />
-                    </td>
-                    <td>{AdminCostUnit}</td>
-                    <td>{GenCostUnit}</td>
-                  </tr>
-                );
-              })}
+              {infrastructures.length > 0 ? (
+                infrastructures.map((infrastructure, index) => {
+                  const generalCost = annualServices.annualGeneralCost || 0;
+                  const administrativeCost = annualServices.annualAdministrativeCost || 0;
+                  const AdminCostUnit = generalCost / publicServices[index]?.productionProyected || 0;
+                  const GenCostUnit = administrativeCost / publicServices[index]?.productionProyected || 0;
+                  return (
+                    <tr key={index}>
+                      <td>{infrastructure.infrastructureName || 'Sin seleccionar'}</td>
+                      <td>{calculateAsignedCostGeneral(generalCost, totalAreaM2, infrastructure.areaM2)}</td>
+                      <td>{calculateAsignedCostGeneral(administrativeCost, totalAreaM2, infrastructure.areaM2)}</td>
+                      <td>
+                        <Controller
+                          name={`publicServices.${index}.productionProyected`}
+                          control={control}
+                          render={({ field }) => (
+                            <NumberInput
+                              hideSteppers
+                              id={`phone-${index}`}
+                              value={field.value}
+                              onChange={(_, { value }) => {
+                                field.onChange(Number(value));
+                              }}
+                              min={0}
+                            />
+                          )}
+                        />
+                      </td>
+                      <td>{AdminCostUnit}</td>
+                      <td>{GenCostUnit}</td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={7} className={styles['empty-state-container']}>
+                    <NoContent
+                      title="No seleccionó infrastructuras"
+                      message="Añada algunas infrastructuras previamente"
+                    />
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -3,6 +3,8 @@ import { NumberInput, Button } from '@carbon/react';
 import { CostStructureFormValues } from '../schema/costructure-schema';
 import React from 'react';
 import { calculateAsignedCost, calculateInductor } from '../../../utils/publicservices';
+import styles from './tabs.styles.scss';
+import NoContent from '../../ui/NoContent';
 interface Props {
   form: UseFormReturn<CostStructureFormValues>;
 }
@@ -15,7 +17,7 @@ export default function PublicServicesTab({ form }: Props) {
   const annualServices = watch('annualServicesCost');
 
   return (
-    <section className="cds--grid cds--spacing-05">
+    <section className={styles['tab-container']}>
       <div className="">
         <div className="cds--col">
           <h4 className="cds--heading-04">Servicios Públicos</h4>
@@ -82,81 +84,93 @@ export default function PublicServicesTab({ form }: Props) {
 
             <tbody>
               {/* Renderizar una fila por cada infraestructura */}
-              {infrastructures.map((infrastructure, index) => (
-                <tr key={index}>
-                  <td>{infrastructure.infrastructureName}</td> {/* Mostrar el nombre de la infraestructura */}
-                  {/* Consumo de energía */}
-                  <td>
-                    <Controller
-                      name={`publicServices.${index}.energyConsumption`}
-                      control={control}
-                      render={({ field }) => (
-                        <NumberInput
-                          hideSteppers
-                          id={`energy-${index}`}
-                          value={field.value}
-                          onChange={(_, { value }) => {
-                            field.onChange(Number(value));
-                            setValue(
-                              `publicServices.${index}.energyInductor`,
-                              calculateInductor(Number(value), infrastructure.areaM2),
-                            );
-                          }}
-                          min={0}
-                        />
-                      )}
+              {infrastructures.length > 0 ? (
+                infrastructures.map((infrastructure, index) => (
+                  <tr key={index}>
+                    <td>{infrastructure.infrastructureName || 'Sin seleccionar'}</td>{' '}
+                    {/* Mostrar el nombre de la infraestructura */}
+                    {/* Consumo de energía */}
+                    <td>
+                      <Controller
+                        name={`publicServices.${index}.energyConsumption`}
+                        control={control}
+                        render={({ field }) => (
+                          <NumberInput
+                            hideSteppers
+                            id={`energy-${index}`}
+                            value={field.value}
+                            onChange={(_, { value }) => {
+                              field.onChange(Number(value));
+                              setValue(
+                                `publicServices.${index}.energyInductor`,
+                                calculateInductor(Number(value), infrastructure.areaM2),
+                              );
+                            }}
+                            min={0}
+                          />
+                        )}
+                      />
+                    </td>
+                    {/* Consumo de agua */}
+                    <td>
+                      <Controller
+                        name={`publicServices.${index}.waterConsumption`}
+                        control={control}
+                        render={({ field }) => (
+                          <NumberInput
+                            hideSteppers
+                            id={`water-${index}`}
+                            value={field.value}
+                            onChange={(_, { value }) => {
+                              field.onChange(Number(value));
+                              setValue(
+                                `publicServices.${index}.waterInductor`,
+                                calculateInductor(Number(value), infrastructure.areaM2),
+                              );
+                            }}
+                            min={0}
+                          />
+                        )}
+                      />
+                    </td>
+                    {/* Consumo de teléfono */}
+                    <td>
+                      <Controller
+                        name={`publicServices.${index}.phoneNetConsumption`}
+                        control={control}
+                        render={({ field }) => (
+                          <NumberInput
+                            hideSteppers
+                            id={`phone-${index}`}
+                            value={field.value}
+                            onChange={(_, { value }) => {
+                              field.onChange(Number(value));
+                              setValue(
+                                `publicServices.${index}.phoneNetInductor`,
+                                calculateInductor(Number(value), infrastructure.areaM2),
+                              );
+                            }}
+                            min={0}
+                          />
+                        )}
+                      />
+                    </td>
+                    <td>{calculateInductor(publicServices[index].energyConsumption, infrastructure.areaM2)}</td>
+                    <td>{calculateInductor(publicServices[index].waterConsumption, infrastructure.areaM2)}</td>
+                    <td>{calculateInductor(publicServices[index].phoneNetConsumption, infrastructure.areaM2)}</td>
+                    {/* Total de inductores */}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className={styles['empty-state-container']}>
+                    <NoContent
+                      title="No seleccionó infrastructuras"
+                      message="Añada algunas infrastructuras previamente"
                     />
                   </td>
-                  {/* Consumo de agua */}
-                  <td>
-                    <Controller
-                      name={`publicServices.${index}.waterConsumption`}
-                      control={control}
-                      render={({ field }) => (
-                        <NumberInput
-                          hideSteppers
-                          id={`water-${index}`}
-                          value={field.value}
-                          onChange={(_, { value }) => {
-                            field.onChange(Number(value));
-                            setValue(
-                              `publicServices.${index}.waterInductor`,
-                              calculateInductor(Number(value), infrastructure.areaM2),
-                            );
-                          }}
-                          min={0}
-                        />
-                      )}
-                    />
-                  </td>
-                  {/* Consumo de teléfono */}
-                  <td>
-                    <Controller
-                      name={`publicServices.${index}.phoneNetConsumption`}
-                      control={control}
-                      render={({ field }) => (
-                        <NumberInput
-                          hideSteppers
-                          id={`phone-${index}`}
-                          value={field.value}
-                          onChange={(_, { value }) => {
-                            field.onChange(Number(value));
-                            setValue(
-                              `publicServices.${index}.phoneNetInductor`,
-                              calculateInductor(Number(value), infrastructure.areaM2),
-                            );
-                          }}
-                          min={0}
-                        />
-                      )}
-                    />
-                  </td>
-                  <td>{calculateInductor(publicServices[index].energyConsumption, infrastructure.areaM2)}</td>
-                  <td>{calculateInductor(publicServices[index].waterConsumption, infrastructure.areaM2)}</td>
-                  <td>{calculateInductor(publicServices[index].phoneNetConsumption, infrastructure.areaM2)}</td>
-                  {/* Total de inductores */}
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
@@ -181,61 +195,72 @@ export default function PublicServicesTab({ form }: Props) {
                 </tr>
               </thead>
               <tbody>
-                {infrastructures.map((infrastructure, index) => {
-                  const waterInductor = publicServices[index].waterInductor;
-                  const energyInductor = publicServices[index].energyInductor;
-                  const phoneNetInductor = publicServices[index].phoneNetInductor;
-                  const totalInductorWater = publicServices.reduce((acc, curr) => acc + curr.waterInductor, 0);
-                  const totalInductorEnergy = publicServices.reduce((acc, curr) => acc + curr.energyInductor, 0);
-                  const totalInductorPhone = publicServices.reduce((acc, curr) => acc + curr.phoneNetInductor, 0);
-                  const totalCostEnergy = calculateAsignedCost(
-                    annualServices.annualEnergyCost,
-                    totalInductorEnergy,
-                    energyInductor,
-                  );
-                  const totalCostWater = calculateAsignedCost(
-                    annualServices.annualWaterCost,
-                    totalInductorWater,
-                    waterInductor,
-                  );
-                  const totalCostPhone = calculateAsignedCost(
-                    annualServices.annualPhoneNetCost,
-                    totalInductorPhone,
-                    phoneNetInductor,
-                  );
-                  const totalCostAssigned = totalCostEnergy + totalCostWater + totalCostPhone;
-                  const costPerUnit =
-                    publicServices[index].productionProyected > 0
-                      ? totalCostAssigned / publicServices[index].productionProyected
-                      : 0;
-                  return (
-                    <tr key={index}>
-                      <td>{infrastructure.infrastructureName}</td>
-                      <td>{totalCostEnergy}</td>
-                      <td>{totalCostWater}</td>
-                      <td>{totalCostPhone}</td>
-                      <td>{totalCostAssigned}</td>
-                      <td>
-                        <Controller
-                          name={`publicServices.${index}.productionProyected`}
-                          control={control}
-                          render={({ field }) => (
-                            <NumberInput
-                              hideSteppers
-                              id={`phone-${index}`}
-                              value={field.value}
-                              onChange={(_, { value }) => {
-                                field.onChange(Number(value));
-                              }}
-                              min={0}
-                            />
-                          )}
-                        />
-                      </td>
-                      <td>{costPerUnit}</td>
-                    </tr>
-                  );
-                })}
+                {infrastructures.length > 0 ? (
+                  infrastructures.map((infrastructure, index) => {
+                    const waterInductor = publicServices[index].waterInductor;
+                    const energyInductor = publicServices[index].energyInductor;
+                    const phoneNetInductor = publicServices[index].phoneNetInductor;
+                    const totalInductorWater = publicServices.reduce((acc, curr) => acc + curr.waterInductor, 0);
+                    const totalInductorEnergy = publicServices.reduce((acc, curr) => acc + curr.energyInductor, 0);
+                    const totalInductorPhone = publicServices.reduce((acc, curr) => acc + curr.phoneNetInductor, 0);
+                    const totalCostEnergy = calculateAsignedCost(
+                      annualServices.annualEnergyCost,
+                      totalInductorEnergy,
+                      energyInductor,
+                    );
+                    const totalCostWater = calculateAsignedCost(
+                      annualServices.annualWaterCost,
+                      totalInductorWater,
+                      waterInductor,
+                    );
+                    const totalCostPhone = calculateAsignedCost(
+                      annualServices.annualPhoneNetCost,
+                      totalInductorPhone,
+                      phoneNetInductor,
+                    );
+                    const totalCostAssigned = totalCostEnergy + totalCostWater + totalCostPhone;
+                    const costPerUnit =
+                      publicServices[index].productionProyected > 0
+                        ? totalCostAssigned / publicServices[index].productionProyected
+                        : 0;
+                    return (
+                      <tr key={index}>
+                        <td>{infrastructure.infrastructureName || 'Sin seleccionar'}</td>
+                        <td>{totalCostEnergy}</td>
+                        <td>{totalCostWater}</td>
+                        <td>{totalCostPhone}</td>
+                        <td>{totalCostAssigned}</td>
+                        <td>
+                          <Controller
+                            name={`publicServices.${index}.productionProyected`}
+                            control={control}
+                            render={({ field }) => (
+                              <NumberInput
+                                hideSteppers
+                                id={`phone-${index}`}
+                                value={field.value}
+                                onChange={(_, { value }) => {
+                                  field.onChange(Number(value));
+                                }}
+                                min={0}
+                              />
+                            )}
+                          />
+                        </td>
+                        <td>{costPerUnit}</td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={7} className={styles['empty-state-container']}>
+                      <NoContent
+                        title="No seleccionó infrastructuras"
+                        message="Añada algunas infrastructuras previamente"
+                      />
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
