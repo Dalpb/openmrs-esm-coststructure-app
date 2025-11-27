@@ -15,3 +15,8 @@ export function calculateAsignedCostGeneral(annualCost: number, totalAreaM2: num
     if(totalAreaM2 === 0) return 0;
     return (areaM2 / totalAreaM2) * annualCost; 
 }
+
+export function calculateUnitCostService(asignedCost: number, productionProyected: number){
+    if(productionProyected < 0 )return 0;
+    return asignedCost/ productionProyected;
+}

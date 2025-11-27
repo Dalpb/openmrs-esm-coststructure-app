@@ -15,6 +15,8 @@ import SupplyTab from './tabs/supply-tab';
 import PageHeader from '../ui/PageHeader/pageHeader';
 import { WhitePaper } from '@carbon/react/icons';
 import SummaryTab from './tabs/summary-tab';
+import styles from './form.scss';
+
 export default function CostStructureForm() {
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -24,6 +26,16 @@ export default function CostStructureForm() {
       procedure: { conceptId: 0, nameFull: '', code: '' },
       infrastructures: [],
       publicServices: [],
+      supplyCost: [],
+      equipmentCost: [],
+      humanResourceCost: [],
+      annualServicesCost: {
+        annualAdministrativeCost: 0,
+        annualEnergyCost: 0,
+        annualGeneralCost: 0,
+        annualPhoneNetCost: 0,
+        annualWaterCost: 0,
+      },
     },
   });
   const {
@@ -35,16 +47,21 @@ export default function CostStructureForm() {
   const onSubmit = (data: CostStructureFormValues) => {
     console.log('💾 Datos enviados:', data);
   };
+
+  const onError = (errors: any) => {
+    console.log('❌ Errores de validación:', errors);
+  };
+
   const handleTanbChange = (state: { selectedIndex: number }) => {
     setSelectedTab((index) => state.selectedIndex);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
+    <form onSubmit={handleSubmit(onSubmit, onError)} className="">
       <PageHeader icon={<WhitePaper size={48} />} title="Crear Estructura de Costos – CPMS" subtitle="Costeo" />
       <div className="">
-        <section className="cds--space-y-2 cds--space-x-2">
-          <h3 className="text-lg font-medium">Información del procedimiento</h3>
+        <section className={styles['header-form']}>
+          <h3 className={styles.title}>Información del procedimiento</h3>
 
           <Controller
             name="procedure"
@@ -60,8 +77,8 @@ export default function CostStructureForm() {
         </section>
 
         {/* Tabs de costos */}
-        <section>
-          <h3 className="">Estructura de Costos Detallada</h3>
+        <section className={styles['body-form']}>
+          <h3 className={styles.title}>Estructura de Costos Detallada</h3>
           <Tabs selectedIndex={selectedTab} onChange={handleTanbChange}>
             <TabList>
               <Tab>Insumos y Medicamentos</Tab>

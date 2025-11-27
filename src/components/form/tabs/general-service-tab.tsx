@@ -69,13 +69,28 @@ export default function GeneralServiceTab({ form }: Props) {
                 infrastructures.map((infrastructure, index) => {
                   const generalCost = annualServices.annualGeneralCost || 0;
                   const administrativeCost = annualServices.annualAdministrativeCost || 0;
-                  const AdminCostUnit = generalCost / publicServices[index]?.productionProyected || 0;
-                  const GenCostUnit = administrativeCost / publicServices[index]?.productionProyected || 0;
+                  const asignedGeneralCost = calculateAsignedCostGeneral(
+                    generalCost,
+                    totalAreaM2,
+                    infrastructure.areaM2,
+                  );
+                  const asignedAdminCost = calculateAsignedCostGeneral(
+                    administrativeCost,
+                    totalAreaM2,
+                    infrastructure.areaM2,
+                  );
+                  const proyectedProduction = publicServices[index]?.productionProyected;
+                  let adminCostUnit = 0;
+                  let generalCostUnit = 0;
+                  if (proyectedProduction > 0) {
+                    adminCostUnit = asignedAdminCost / proyectedProduction;
+                    generalCostUnit = asignedGeneralCost / proyectedProduction;
+                  }
                   return (
                     <tr key={index}>
                       <td>{infrastructure.infrastructureName || 'Sin seleccionar'}</td>
-                      <td>{calculateAsignedCostGeneral(generalCost, totalAreaM2, infrastructure.areaM2)}</td>
-                      <td>{calculateAsignedCostGeneral(administrativeCost, totalAreaM2, infrastructure.areaM2)}</td>
+                      <td>{asignedAdminCost}</td>
+                      <td>{asignedGeneralCost}</td>
                       <td>
                         <Controller
                           name={`publicServices.${index}.productionProyected`}
@@ -93,8 +108,8 @@ export default function GeneralServiceTab({ form }: Props) {
                           )}
                         />
                       </td>
-                      <td>{AdminCostUnit}</td>
-                      <td>{GenCostUnit}</td>
+                      <td>{adminCostUnit}</td>
+                      <td>{generalCostUnit}</td>
                     </tr>
                   );
                 })

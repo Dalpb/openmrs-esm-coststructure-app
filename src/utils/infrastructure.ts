@@ -2,6 +2,7 @@ export function calculateTotalValidConsruction(areaM2: number, constructionCost:
     return areaM2 * constructionCost;
 }
 export function calculateDepreciationByMinutes(totalValueConstruction: number,useFullYears: number = 50 ): number {
+    
     const useFullYearsInMinutes = useFullYears * 525600;
     return totalValueConstruction / useFullYearsInMinutes;
 }

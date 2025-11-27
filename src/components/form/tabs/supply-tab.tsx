@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, useFieldArray, UseFormReturn } from 'react-hook-form';
 import { CostStructureFormValues } from '../schema/costructure-schema';
 import { Button, NumberInput, Select, SelectItem, TextInput } from '@carbon/react';
-import { Add } from '@carbon/react/icons';
+import { Add, TrashCan } from '@carbon/react/icons';
 import useGetSupply from '../../../hooks/use-get-supply';
 import { calculateStandarCostSupply, calculateUnitCostSupply } from '../../../utils/supply';
 import styles from './tabs.styles.scss';
@@ -29,7 +29,6 @@ export default function SupplyTab({ form }: Props) {
       supplyId: 0,
       unitAcquisition: '',
       unitConsumption: '',
-      timeMinutes: 0,
       name: 'Sin seleccionar',
       type: '',
       unitCost: 0,
@@ -192,11 +191,8 @@ export default function SupplyTab({ form }: Props) {
                           )}
                         />
                       </td>
-
                       <td>
-                        <Button kind="secondary" size="sm" onClick={() => remove(index)}>
-                          Eliminar
-                        </Button>
+                        <TrashCan size={16} onClick={() => remove(index)} />
                       </td>
                     </tr>
                   );
@@ -222,7 +218,6 @@ export default function SupplyTab({ form }: Props) {
                 <th>Cantidad</th>
                 <th>Costo Unitario</th>
                 <th>Costo Estandar (S/.)</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>

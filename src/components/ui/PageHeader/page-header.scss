@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   padding: 1rem .5rem 1.5rem;
-  border-bottom: 1px solid #e0e0e0; // separador estilo O3
+  border-bottom: 1px solid #e0e0e0; 
   margin-bottom: 1rem;
 }
 
@@ -31,6 +31,7 @@ font-size: var(--cds-heading-04-font-size, 1.75rem);
   font-weight: var(--cds-heading-04-font-weight, 400);
   line-height: var(--cds-heading-04-line-height, 1.28572);
   letter-spacing: var(--cds-heading-04-letter-spacing, 0);
+  color : #525252
 }
 
 .subtitle {
